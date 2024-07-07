@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <link rel="icon" href="icon.png"> <!-- 设置ICON -->
+    <meta charset="UTF-8"> <!-- 设置页面字符集为UTF-8 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- 设置IE浏览器兼容模式 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 设置视口宽度和初始缩放比例 -->
+    <title>学习帮</title>
+    <style>
+        body { /* 设置页面主体样式 */
+            font-family: "Microsoft YaHei", sans-serif; /* 使用微软雅黑字体 */
+            background: linear-gradient(to right, red, white, red); /* 设置背景为从红色到白色到红色的水平渐变 */
+            color: goldenrod; /* 金色文字 */
+            padding: 20px; /* 内边距为20像素 */
+            -webkit-user-select: none; /* 禁止webkit浏览器选择文本 */
+            -moz-user-select: none; /* 禁止moz浏览器选择文本 */
+            -ms-user-select: none; /* 禁止ms浏览器选择文本 */
+            user-select: none; /* 禁止选择文本 */
+        }
+
+        img {
+            -webkit-user-drag: none; /* 禁止webkit浏览器拖拽图片 */
+            -moz-user-drag: none; /* 禁止moz浏览器拖拽图片 */
+            -ms-user-drag: none; /* 禁止ms浏览器拖拽图片 */
+        }
+        .container { /* 容器样式 */
+            background-color: #fff; /* 背景颜色为白色 */
+            border: 5px solid #dddddd; /* 边框为5像素实线黑色 */
+            border-radius: 10px; /* 边框圆角半径为10像素 */
+            box-shadow: 5px 5px 5px rgb(255, 0, 0); /* 添加5像素偏移的红色阴影 */
+            padding: 20px; /* 内边距为20像素 */
+            margin: 0 auto; /* 左右居中 */
+            width: 80%; /* 宽度占80% */
+            max-width: 1000px; /* 最大宽度为1000像素 */
+            position: absolute; /* 设置绝对定位 */
+            top: 50%; /* 顶部距离为50% */
+            left: 50%; /* 左侧距离为50% */
+            transform: translate(-50%, -50%); /* 使用transform属性将容器中心位于窗口中心 */
+            height: max-content; /* 设置高度为内容最大高度 */
+            background-image: url("container-bg.png"); /* 设置背景图片 */
+            background-size: contain; /* 让背景图片自适应容器大小 */
+            background-position: right; /* 让背景图片在容器的最右边 */
+            background-repeat: no-repeat; /* 背景图片不重复 */
+        }
+
+        .button { /* 按钮样式 */
+            font-size: 16px; /* 字体大小为16像素 */
+            font-weight: bold; /* 字体加粗 */
+            color: gold; /* 文字颜色为金色 */
+            background-color: #ff0000; /* 红背景 */
+            background-image: url("button.jpg"); /* 背景图片 */
+            background-size: contain; /* 让背景图片自适应容器大小 */
+            background-repeat: no-repeat; /* 背景图片不重复 */
+            background-position: right; /* 让背景图片在容器的最右边 */
+            border: none; /* 无边框 */
+            border-radius: 10px; /* 边框圆角半径为5像素 */
+            padding: 10px; /* 上下内边距为10像素 */
+            margin: 10px 15px 20px; /* 设置按钮边距为30像素顶部，15像素左右，20像素底部 */
+            cursor: pointer; /* 鼠标悬停时显示手型 */
+            white-space: nowrap; /* 不换行 */
+        }
+
+        .button:hover { /* 按钮悬停样式 */
+            transform: scale(1.05) rotate(0.5deg); /* 非线性动画：先放大再旋转 */
+            filter: blur(0.5px); /* 添加0.5%的动态模糊效果 */
+            box-shadow: 0 0 3px rgb(255, 0, 0); /* 添加3px的发光效果 */
+        }
+
+        .button-container {
+            flex-wrap: wrap; /* 换行包裹 */
+            justify-content: flex-start; /* 主轴起点对齐 */
+            display: flex; /* 使用弹性盒子布局 */
+        }
+
+        a {
+            text-decoration: none; /* 取消超链接的下划线 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>人民万岁 <img src="icon.png" alt="icon" style="width: 31.5px; height: 31.5px;"></h1> <!-- 在h1标签右侧添加icon.png -->
+        <div id="main-container" class="button-container">
+            <!-- 成就按钮将会在此动态添加 -->
+        </div>
+        <div id="additional-button-frame"></div>
+    </div>
+
+    <script>
+        const achievements = {
+            "做到品学兼优": 0, // 做到品学兼优成就初始化为0
+            "学习马克思主义": 0, // 学习马克思主义成就初始化为0
+            "学习列宁主义": 0, // 学习列宁主义成就初始化为0
+            "学习毛泽东思想": 0, // 学习毛泽东思想成就初始化为0
+            "学习邓小平理论": 0, // 学习邓小平理论成就初始化为0
+            "学习‘三个代表’重要思想": 0, // 学习‘三个代表’重要思想成就初始化为0
+            "学习科学发展观": 0, // 学习科学发展观成就初始化为0
+            "学习习近平新时代中国特色社会主义思想": 0, // 学习习近平新时代中国特色社会主义思想成就初始化为0
+            "学习新发展理念": 0, // 学习新发展理念成就初始化为0
+            "阅读共产党宣言": 0, // 阅读共产党宣言成就初始化为0
+            "阅读毛泽东选集": 0, // 阅读毛泽东选集成就初始化为0
+            "阅读毛泽东语录": 0 // 阅读毛泽东语录成就初始化为0
+        };
+
+        const mainContainer = document.getElementById("main-container"); // 获取主容器元素
+        const additionalButtonFrame = document.getElementById("additional-button-frame"); // 获取附加按钮容器元素
+
+        function createButton(text, increment, link) {
+            const btn = document.createElement("a"); // 创建超链接元素
+            btn.textContent = text; // 设置按钮文本内容
+            btn.className = "button"; // 设置按钮样式类
+            btn.href = link; // 设置超链接地址
+            btn.target = "_blank"; // 在新标签页中打开链接
+            mainContainer.appendChild(btn); // 将按钮添加到主容器中
+            btn.style.marginBottom = "20px";
+        }
+
+        // 初始按钮
+        const initialButtons = [
+            ["做到品学兼优", 1, "https://m.fx361.cc/news/2017/0905/2245951.html"], // 做到品学兼优按钮
+            ["学习马克思主义", 1, "https://www.marxists.org/chinese/marx/index.htm"], // 学习马克思主义按钮
+            ["学习列宁主义", 1, "https://www.marxists.org/chinese/lenin/index.htm"], // 学习列宁主义按钮
+            ["学习毛泽东思想", 1, "https://zqb.cyol.com/content/2007-07/01/content_1810621.htm"], // 学习毛泽东思想按钮
+            ["学习邓小平理论", 1, "http://news.enorth.com.cn/system/2011/06/01/006670692.shtml"], // 学习邓小平理论按钮
+            ["学习‘三个代表’重要思想", 1, "https://zhidao.baidu.com/question/695997452666866124.html"], // 学习‘三个代表’重要思想按钮
+            ["学习科学发展观", 1, "https://zhidao.baidu.com/question/428485228.html"], // 学习科学发展观按钮
+            ["学习习近平新时代中国特色社会主义思想", 1, "http://www.qstheory.cn/dukan/qs/2019-07/16/c_1124750192.htm"], // 学习习近平新时代中国特色社会主义思想按钮
+            ["学习新发展理念", 1, "https://www.dswxyjy.org.cn/n1/2021/0731/c428053-32176664.html"], // 学习新发展理念按钮
+            ["阅读共产党宣言", 1, "https://www.marxists.org/chinese/pdf/the_first_international/1.pdf"], // 阅读共产党宣言按钮
+            ["阅读毛泽东选集",1, "https://www.marxists.org/chinese/maozedong/index.htm"], //阅读毛泽东选集按钮
+            ["阅读毛泽东语录",1, "http://news.enorth.com.cn/system/2008/04/23/003182775.shtml"] //阅读毛泽东语录按钮
+        ];
+
+        // 遍历初始按钮数组并创建按钮
+        initialButtons.forEach(button => {
+            createButton(button[0], button[1], button[2]); // 创建初始按钮
+        });
+
+        // 添加严厉的措施，禁止按下F12、按下Ctrl+Shift+I的快捷键的JS代码
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', event => {
+            if (event.key === 'F12' || (event.ctrlKey && event.shiftKey && event.key === 'I')) {
+                event.preventDefault();
+                alert("禁止非法操作！"); // 添加警告弹窗
+                window.location.href = "law.html"; // 跳转到law.html
+            }
+        })
+    </script>
+</body>
+</html>
